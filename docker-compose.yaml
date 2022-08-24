@@ -1,0 +1,22 @@
+version: '3.7'
+services:
+  php-lighttpd:
+    container_name: xdebug-php
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      XDEBUG_MODE: "${XDEBUG_MODE}"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    hostname: xdebug-php
+    init: true
+    ports:
+      - "8123:80"
+    volumes:
+      - type: "bind"
+        source: "${PWD}/html"
+        target: "/var/www/html"
+      - type: "bind"
+        source: "${PWD}/logs"
+        target: "/tmp/docker-xdebug"
